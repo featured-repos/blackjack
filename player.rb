@@ -15,6 +15,7 @@ class Player
     hand.each do |card|
       puts card
     end
+    puts
   end
 
   def cpu_show_hand
@@ -22,6 +23,7 @@ class Player
     hand[1..-1].each do |card|
       puts card
     end
+    puts
   end
 
   def hand_value

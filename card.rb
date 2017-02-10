@@ -3,14 +3,15 @@ class Card
 
   include Comparable
 
-  attr_accessor :face, :suit
+  attr_accessor :face, :suit, :value
 
   def initialize(face, suit)
     @face = face
     @suit = suit
+    @value = value_map
   end
 
-  def value
+  def value_map
     values = {
       "2" => 2,
       "3" => 3,

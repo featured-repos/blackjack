@@ -4,10 +4,13 @@ class Deck
 
   attr_accessor :cards
 
-  def initialize
+  def initialize(num=1)
     suits = %w(Spades Hearts Clubs Diamonds)
     faces = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
-    self.cards = faces.product(suits).collect { |face, suit| Card.new(face, suit) }
+    self.cards = []
+    num.times do
+      self.cards += faces.product(suits).collect { |face, suit| Card.new(face, suit) }
+    end
     cards.shuffle!
   end
 
