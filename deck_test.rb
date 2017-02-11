@@ -22,7 +22,7 @@ class DeckTest < MiniTest::Test
     deck = Deck.new
     faces = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     faces.each do |face|
-      assert deck.cards.select { |card| card.face == face }.count == 4
+      assert_equal 4, deck.cards.select { |card| card.face == face }.count
     end
   end
 
