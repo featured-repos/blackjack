@@ -1,23 +1,23 @@
 
 class Hand
 
-  attr_accessor :hand, :split_number
+  attr_accessor :cards, :split_number
 
   def initialize(split_number=0)
-    @hand = []
+    @cards = []
     @split_number = split_number
   end
 
   def player_show_hand(pretext="Your hand is: ")
     if split_number == 0
       puts pretext
-      hand.each do |card|
+      cards.each do |card|
         puts card
       end
       puts "Your current score is #{hand_value}"
     else
       puts "Split hand ##{split_number} is: "
-      hand.each do |card|
+      cards.each do |card|
         puts card
       end
       puts "Your current score is #{hand_value}"
@@ -27,14 +27,14 @@ class Hand
 
   def cpu_show_hand
     puts "The house is showing: "
-    hand[1..-1].each do |card|
+    cards[1..-1].each do |card|
       puts card
     end
     puts
   end
 
   def hand_value
-    hand.collect(&:value).reduce(:+)
+    cards.collect(&:value).reduce(:+)
   end
 
   def bust?
@@ -44,7 +44,7 @@ class Hand
   def hand_wins?(other)
     return false if bust?
     return true if other.bust?
-    hand_value == 21 || (hand_value > other.hand_value) || hand.count > 5 || ((hand_value == other.hand_value) && (hand.count >= other.hand.count))
+    hand_value == 21 || (hand_value > other.hand_value) || cards.count > 5 || ((hand_value == other.hand_value) && (cards.count >= other.cards.count))
   end
 
   def to_s

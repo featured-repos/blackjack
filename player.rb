@@ -17,13 +17,13 @@ class Player
     @hands_array[-1]
   end
 
-  def player_show_hands
+  def player_show
     hands_array.each do |hand|
       hand.player_show_hand
     end
   end
 
-  def cpu_show_hand
+  def cpu_show
     hands_array.each do |hand|
       hand.cpu_show_hand
     end
