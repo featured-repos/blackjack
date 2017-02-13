@@ -46,9 +46,8 @@ class Game
   end
 
   def split_decision(current_hand)
-    if current_hand.cards.collect(&:face).uniq.length == 1
-      response = prompt.yes?("Would you like to split? \n")
-      if response
+    if current_hand.cards[0].face == current_hand.cards[1].face
+      if prompt.yes?("Would you like to split? \n")
         playah.draw_a_hand.cards = [current_hand.cards.shift, deck.draw]
         current_hand.cards << deck.draw
         show_hands
