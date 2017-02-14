@@ -3,6 +3,11 @@ require_relative 'deck'
 require_relative 'player'
 require 'pry'
 
+=begin
+overall, it was hard to find something to tweak without making big changes. You code works well and basically does everything it should.
+Looks good.
+=end
+
 class Game
 
   attr_accessor :deck, :playah, :dealah, :prompt
@@ -45,17 +50,24 @@ class Game
     ace_decision
   end
 
+
   def split_decision(current_hand)
-    if current_hand.cards.collect(&:face).uniq.length == 1
-      response = prompt.yes?("Would you like to split? \n")
-      if response
+    if current_hand.cards[0].face == current_hand.cards[1].face
+      if prompt.yes?("Would you like to split? \n")
         playah.draw_a_hand.cards = [current_hand.cards.shift, deck.draw]
         current_hand.cards << deck.draw
+        # for split to work for multiple splits you basically need to call this function again for each new hand.
+        # I wasn't sure how to plug in the syntax.
+        #maybe this:
+        #playah.hands_array.each{ |hand| split_decision(hand)}
+
         show_hands
       end
     end
   end
 
+# this may make you bust if you hit with an 11 ace and it puts you over 21.
+# you may want a way to auto drop it down to 1 if you would bust (applies to cpu too)
   def ace_decision
     playah.hands_array.each do |current_hand|
       current_hand.cards.select { |card| card.face == 'Ace' }      # searches for Aces
@@ -93,6 +105,13 @@ class Game
     end
   end
 
+#cpu doesn't handle aces (unless I missed it).
+# I did something like this, but it assumes ace will auto change so you don't bust
+# if hand.any?{ |c| c.face == 'A' }
+#    hand.inject(:+) < 18
+# else
+#   hand.inject(:+) < 16
+#end
   def cpu_hit_or_stay
     dealah.hands_array[0].cards << deck.draw until dealah.hands_array[0].hand_value >= 16 || dealah.hands_array[0].bust?
   end
